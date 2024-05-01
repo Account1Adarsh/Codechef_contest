@@ -1,0 +1,81 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+	// your code goes here
+	int t;
+	cin>>t;
+	while(t--){
+	    int n,m;
+	    cin>>n>>m;
+	    int bat[n];
+	    int bol[m];
+	    for(int i=0;i<n;i++){
+	        cin>>bat[i];
+	    }
+	    for(int i=0;i<m;i++){
+	        cin>>bol[i];
+	    }
+	    if(n<4||m<4||n+m<11){
+	        cout<<-1<<endl;
+	        continue;
+	    }
+	    
+	    sort(bat,bat+n);
+	    reverse(bat,bat+n);
+	    sort(bol,bol+m);
+	    reverse(bol,bol+m);
+	    long long sum=0;
+	    for(int i=0;i<4;i++){
+	        sum+=bat[i];
+	        sum+=bol[i];
+	        bat[i]=0;
+	        bol[i]=0;
+	    }
+	    
+	    if(n==4){
+	        sum+=(bol[4]+bol[5]+bol[6]);
+	    }
+	    else if(m==4){
+	        sum+=(bat[4]+bat[5]+bat[6]);
+	    }
+	    
+	    else{
+	        int j=4;
+	        int count=0;
+	        int i=4;
+	        for(i=4;i<n and j<m and count<3;){
+	            if(bat[i]>bol[j]){
+	                sum+=bat[i];
+	                i++;
+	                count++;
+	            }
+	            else{
+	                sum+=bol[j];
+	                j++;
+	                count++;
+	            }
+	        }
+	        if(count<3){
+	            if(j==m){
+	                while(count<3){
+	                    count++;
+	                    sum+=bat[i];
+	                    i++;
+	                }
+	            }
+	            else if(i==n){
+	                while(count<3){
+	                    count++;
+	                    sum+=bol[j];
+	                    j++;
+	                    
+	                }
+	            }
+	        }
+	        
+	    }
+	    cout<<sum<<endl;
+	}
+
+}
